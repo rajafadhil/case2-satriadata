@@ -42,9 +42,15 @@ st.write(filtered_df.head())
 tweet_counts = df["hour"].value_counts().sort_index()
 st.subheader("⏰ Distribusi Tweet per Jam")
 fig1, ax1 = plt.subplots()
-tweet_counts.plot(kind="bar", ax=ax1)
+bars1 = tweet_counts.plot(kind="bar", ax=ax1)
 ax1.set_xlabel("Jam")
 ax1.set_ylabel("Jumlah Tweet")
+
+# Tambahkan angka di atas bar
+for p in bars1.patches:
+    ax1.annotate(str(p.get_height()), (p.get_x() + p.get_width() / 2, p.get_height()),
+                 ha='center', va='bottom', fontsize=9)
+
 st.pyplot(fig1)
 
 # Penyebutan kandidat
