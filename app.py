@@ -60,8 +60,14 @@ mention_series = pd.Series(mention_counts).sort_values(ascending=False)
 
 st.subheader("🗳️ Penyebutan Kandidat")
 fig2, ax2 = plt.subplots()
-mention_series.plot(kind="bar", ax=ax2)
+bars2 = mention_series.plot(kind="bar", ax=ax2)
 ax2.set_ylabel("Jumlah Penyebutan")
+
+# Tambahkan angka di atas bar
+for p in bars2.patches:
+    ax2.annotate(str(p.get_height()), (p.get_x() + p.get_width() / 2, p.get_height()),
+                 ha='center', va='bottom', fontsize=9)
+
 st.pyplot(fig2)
 
 # Distribusi label
