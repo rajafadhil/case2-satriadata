@@ -39,7 +39,7 @@ st.subheader(f"📁 Data pada jam {selected_hour}")
 st.write(filtered_df.head())
 
 # Grafik jumlah tweet per jam
-tweet_counts = df["hour"].value_counts().sort_index()
+tweet_counts = filtered_df["hour"].value_counts().sort_index()
 st.subheader("⏰ Distribusi Tweet per Jam")
 fig1, ax1 = plt.subplots()
 bars1 = tweet_counts.plot(kind="bar", ax=ax1)
