@@ -17,7 +17,13 @@ df = load_data()
 
 # Sidebar filter
 st.sidebar.header("🔎 Filter")
-selected_hour = st.sidebar.slider("Filter jam tweet:", 0, 23, 12)
+selected_hour = st.sidebar.selectbox("Pilih jam tweet:", options=["Semua"] + list(range(24)))
+
+if selected_hour == "Semua":
+    filtered_df = df
+else:
+    filtered_df = df[df["hour"] == int(selected_hour)]
+
 
 # Bersihkan teks
 def clean_text(text):
@@ -55,7 +61,7 @@ st.pyplot(fig1)
 
 # Penyebutan kandidat
 candidates = ["Anies", "Ganjar", "Prabowo", "Muhaimin", "Mahfud", "Gibran"]
-mention_counts = {c: df["cleaned_text"].str.contains(c.lower()).sum() for c in candidates}
+mention_counts = {c: filtered_df["cleaned_text"].str.contains(c.lower()).sum() for c in candidates}
 mention_series = pd.Series(mention_counts).sort_values(ascending=False)
 
 st.subheader("🗳️ Penyebutan Kandidat")
@@ -72,7 +78,7 @@ st.pyplot(fig2)
 
 # Distribusi label
 st.subheader("🏷️ Distribusi Label (type)")
-st.write(df["type"].value_counts())
+st.write(filtered_df["type"].value_counts())
 
 st.subheader("📌 Distribusi Kategori (tcode)")
-st.write(df["tcode"].value_counts())
+st.write(filtered_df["tcode"].value_counts())
