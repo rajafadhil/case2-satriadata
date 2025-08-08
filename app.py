@@ -46,11 +46,17 @@ st.write(filtered_df.head())
 
 # Grafik jumlah tweet per jam
 tweet_counts = filtered_df["hour"].value_counts().sort_index()
-st.subheader("⏰ Distribusi Tweet per Jam")
-fig1, ax1 = plt.subplots()
-bars1 = tweet_counts.plot(kind="bar", ax=ax1)
-ax1.set_xlabel("Jam")
-ax1.set_ylabel("Jumlah Tweet")
+
+if tweet_counts.empty:
+    st.warning("Tidak ada tweet untuk jam yang dipilih.")
+else:
+    fig1, ax1 = plt.subplots()
+    bars1 = tweet_counts.plot(kind="bar", ax=ax1)
+    ax1.set_title("Distribusi Tweet per Jam")
+    ax1.set_xlabel("Jam")
+    ax1.set_ylabel("Jumlah Tweet")
+    st.pyplot(fig1)
+
 
 # Tambahkan angka di atas bar
 for p in bars1.patches:
